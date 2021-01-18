@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: landing-app
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: frontend
+      service: landing-app
+  template:
+    metadata:
+      labels:
+        type: frontend
+        service: landing-app
+    spec:
+      containers:
+        - name: container
+          image: sellerspot/landing-app
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: landing-app
+  namespace: app
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+  selector:
+    type: frontend
+    service: landing-app

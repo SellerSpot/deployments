@@ -1,0 +1,79 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: root-ingress
+  namespace: app
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-production-dns" # change to production after successfull allocation of SSL via staging issuer
+spec:
+  tls:
+    - hosts:
+        # root domain SSL provision
+        - "sellerspotdev.tech"
+
+        # all api routes (server stuff)
+        - "*.api.sellerspotdev.tech"
+
+        # all apps second level domains
+        - "*.pos.sellerspotdev.tech"
+        # all apps second level domains
+
+        # all first level domains
+        - "*.sellerspotdev.tech" # this will auto provision SSL for www, dashboard first level subdomains
+
+      # this secret group holds all the ssl generated via this ingress resource
+      secretName: sellerspotdev.tech-letsencrypt-production-dns # change the name to production after sucessfull allocation of SSL via staging issuer
+  rules:
+    # landing app route (@ and www domain) serves landing app - whose CTA will call the dashboard route (core - app) (dashboard.sellerspotdev.tech)
+    - host: "sellerspotdev.tech"
+      http:
+        paths:
+          - backend:
+              serviceName: landing-app
+              servicePort: 3000
+            path: /
+    - host: "www.sellerspotdev.tech"
+      http:
+        paths:
+          - backend:
+              serviceName: landing-app
+              servicePort: 3000
+            path: /
+
+    # core app route - which is the main dashboard route - landing app call to action will redirects the tenant here
+    - host: "dashboard.sellerspotdev.tech"
+      http:
+        paths:
+          - backend:
+              serviceName: core-app
+              servicePort: 3000
+            path: /
+
+    # all api routes will goes here
+    # core-server route
+    - host: "core.api.sellerspotdev.tech"
+      http:
+        paths:
+          - backend:
+              serviceName: core-server
+              servicePort: 8000
+            path: /
+
+    # app routes
+    # point-of-sale-app route
+    # - host: "*.pos.sellerspotdev.tech"
+    #   http:
+    #     paths:
+    #       - backend:
+    #           serviceName: service-name
+    #           servicePort: port-number
+    #         path: /
+
+    # If no routes matches - match the request to default route (ie,. redirect to landing app (base route) )
+    - http:
+        paths:
+          - backend:
+              serviceName: core-app
+              servicePort: 3000
+            path: /
