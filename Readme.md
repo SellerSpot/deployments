@@ -1,4 +1,5 @@
 # Sellerspot Multitenant Deployment flow
+Deployment flow for Sellerspot eco-system.
 
 ## Nginx_ingress installation
 
