@@ -67,15 +67,14 @@ spec:
               servicePort: 8000
             path: /
 
-    # app routes
     # point-of-sale-app route
-    # - host: "*.pos.sellerspotdev.tech"
-    #   http:
-    #     paths:
-    #       - backend:
-    #           serviceName: service-name
-    #           servicePort: port-number
-    #         path: /
+    - host: "*.pos.sellerspotdev.tech"
+      http:
+        paths:
+          - backend:
+              serviceName: point-of-sale-app
+              servicePort: 3000
+            path: /
 
     # (default routes should match the ecommerce app later, if not tenant matches the route redirect to landing-app)
     - http:
