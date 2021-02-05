@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: point-of-sale-server-staging
+  namespace: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: backend
+      service: point-of-sale-server-staging
+  template:
+    metadata:
+      labels:
+        type: backend
+        service: point-of-sale-server-staging
+    spec:
+      containers:
+        - name: container
+          image: sellerspot/point-of-sale-server-staging
+          imagePullPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: point-of-sale-server-staging
+  namespace: staging
+spec:
+  type: NodePort
+  ports:
+    - port: 8000
+  selector:
+    type: backend
+    service: point-of-sale-server-staging

@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: landing-app
-  namespace: app
+  name: landing-app-staging
+  namespace: staging
 spec:
   replicas: 1
   selector:
     matchLabels:
       type: frontend
-      service: landing-app
+      service: landing-app-staging
   template:
     metadata:
       labels:
         type: frontend
-        service: landing-app
+        service: landing-app-staging
     spec:
       containers:
         - name: container
-          image: sellerspot/landing-app
+          image: sellerspot/landing-app-staging
           imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: landing-app
-  namespace: app
+  name: landing-app-staging
+  namespace: staging
 spec:
   type: NodePort
   ports:
     - port: 3000
   selector:
     type: frontend
-    service: landing-app
+    service: landing-app-staging

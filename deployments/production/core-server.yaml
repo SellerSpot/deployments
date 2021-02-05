@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: core-server
-  namespace: app
+  name: core-server-production
+  namespace: production
 spec:
   replicas: 1
   selector:
@@ -25,7 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: core-server
-  namespace: app
+  namespace: production
 spec:
   type: NodePort
   ports:

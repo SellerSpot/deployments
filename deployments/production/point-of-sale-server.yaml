@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: point-of-sale-server
-  namespace: app
+  name: point-of-sale-server-production
+  namespace: production
 spec:
   replicas: 1
   selector:
     matchLabels:
       type: backend
-      service: point-of-sale-server
+      service: point-of-sale-server-production
   template:
     metadata:
       labels:
         type: backend
-        service: point-of-sale-server
+        service: point-of-sale-server-production
     spec:
       containers:
         - name: container
-          image: sellerspot/point-of-sale-server
+          image: sellerspot/point-of-sale-server-production
           imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: point-of-sale-server
-  namespace: app
+  name: point-of-sale-server-production
+  namespace: production
 spec:
   type: NodePort
   ports:
     - port: 8000
   selector:
     type: backend
-    service: point-of-sale-server
+    service: point-of-sale-server-production

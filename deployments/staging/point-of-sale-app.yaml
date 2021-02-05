@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: point-of-sale-app
-  namespace: app
+  name: point-of-sale-app-staging
+  namespace: staging
 spec:
   replicas: 1
   selector:
     matchLabels:
       type: frontend
-      service: point-of-sale-app
+      service: point-of-sale-app-staging
   template:
     metadata:
       labels:
         type: frontend
-        service: point-of-sale-app
+        service: point-of-sale-app-staging
     spec:
       containers:
         - name: container
-          image: sellerspot/point-of-sale-app
+          image: sellerspot/point-of-sale-app-staging
           imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: point-of-sale-app
-  namespace: app
+  name: point-of-sale-app-staging
+  namespace: staging
 spec:
   type: NodePort
   ports:
     - port: 3000
   selector:
     type: frontend
-    service: point-of-sale-app
+    service: point-of-sale-app-staging
