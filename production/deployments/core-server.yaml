@@ -8,23 +8,23 @@ spec:
   selector:
     matchLabels:
       type: backend
-      service: core-server
+      service: core-server-production
   template:
     metadata:
       labels:
         type: backend
-        service: core-server
+        service: core-server-production
     spec:
       containers:
         - name: container
-          image: sellerspot/core-server
+          image: sellerspot/core-server-production
           imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: core-server
+  name: core-server-production
   namespace: production
 spec:
   type: NodePort
@@ -32,4 +32,4 @@ spec:
     - port: 8000
   selector:
     type: backend
-    service: core-server
+    service: core-server-production

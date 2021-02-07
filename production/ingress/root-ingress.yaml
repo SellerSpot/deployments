@@ -5,7 +5,7 @@ metadata:
   namespace: production # ***heads'up*** so important.
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/issuer: "letsencrypt-staging-dns01" # change to production after successfull allocation of SSL via staging issuer
+    cert-manager.io/issuer: "letsencrypt-production-dns01" # change to production after successfull allocation of SSL via production issuer
 spec:
   tls:
     - hosts:
@@ -20,7 +20,7 @@ spec:
         - "*.pos.sellerspot.in"
 
       # cert-manager will store the created certificate in this secret.
-      secretName: sellerspot.in-letsencrypt-staging-dns # change the name to production after sucessfull allocation of SSL via staging issuer
+      secretName: sellerspot.in-letsencrypt-production-dns # change the name to production after sucessfull allocation of SSL via staging issuer
 
   rules:
     # landing app route (@ and www domain) serves landing app - whose CTA will call the dashboard route (core - app) (dashboard.sellerspot.in)
@@ -28,14 +28,14 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: landing-app
+              serviceName: landing-app-production
               servicePort: 3000
             path: /
     - host: "www.sellerspot.in"
       http:
         paths:
           - backend:
-              serviceName: landing-app
+              serviceName: landing-app-production
               servicePort: 3000
             path: /
 
@@ -44,7 +44,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: core-app
+              serviceName: core-app-production
               servicePort: 3000
             path: /
 
@@ -54,7 +54,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: core-server
+              serviceName: core-server-production
               servicePort: 8000
             path: /
 
@@ -63,7 +63,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: point-of-sale-server
+              serviceName: point-of-sale-server-production
               servicePort: 8000
             path: /
 
@@ -72,7 +72,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: point-of-sale-app
+              serviceName: point-of-sale-app-production
               servicePort: 3000
             path: /
 
@@ -80,6 +80,6 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: core-app
+              serviceName: core-app-production
               servicePort: 3000
             path: /
