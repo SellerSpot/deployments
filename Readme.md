@@ -1,5 +1,8 @@
 # Sellerspot Multitenant Deployment flow
+
 Deployment flow for Sellerspot eco-system.
+
+`Check corresponding folders for deployments (staging/production)`
 
 ## Nginx_ingress installation
 
@@ -43,13 +46,13 @@ Deployment flow for Sellerspot eco-system.
    ```
         **For Staging**
 
-        kubectl apply -f cert-manager/cert-issuers/letsencrypt-staging.yaml
-        kubectl apply -f cert-manager/cert-issuers/letsencrypt-staging-dns.yaml
+        kubectl apply -f cert-manager/cert-issuers/letsencrypt-staging-http01.yaml
+        kubectl apply -f cert-manager/cert-issuers/letsencrypt-staging-dns01.yaml
 
         **For Production**
 
-        kubectl apply -f cert-manager/cert-issuers/letsencrypt-production.yaml
-        kubectl apply -f cert-manager/cert-issuers/letsencrypt-production-dns.yaml
+        kubectl apply -f cert-manager/cert-issuers/letsencrypt-production-http01.yaml
+        kubectl apply -f cert-manager/cert-issuers/letsencrypt-production-dns01.yaml
 
    ```
 
