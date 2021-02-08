@@ -80,6 +80,6 @@ spec:
     - http:
         paths:
           - backend:
-              serviceName: core-app-production
+              serviceName: landing-app-production
               servicePort: 3000
             path: /
