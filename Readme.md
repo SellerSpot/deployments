@@ -2,6 +2,12 @@
 
 Deployment flow for Sellerspot eco-system.
 
+# change logs
+
+- 27/03/2021 - prototype 2 base setup done
+
+---
+
 `Check corresponding folders for deployments (staging/production)`
 
 ## Nginx_ingress installation
